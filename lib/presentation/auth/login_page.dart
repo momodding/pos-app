@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_posresto_app/data/datasources/auth_local_datasource.dart';
 import 'package:flutter_posresto_app/presentation/auth/bloc/login/login_bloc.dart';
-import 'package:flutter_posresto_app/presentation/home/dashboard_page.dart';
+import 'package:flutter_posresto_app/presentation/home/pages/dashboard_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/assets/assets.gen.dart';

@@ -6,14 +6,14 @@ import 'package:flutter_posresto_app/data/models/response/auth_response_model.da
 import 'package:flutter_posresto_app/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/auth/login_page.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class LogoutPage extends StatefulWidget {
+  const LogoutPage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<LogoutPage> createState() => _LogoutPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _LogoutPageState extends State<LogoutPage> {
   User? user;
 
   @override
