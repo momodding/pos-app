@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/core/constants/variables.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
+import 'package:flutter_posresto_app/presentation/home/block/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 
 
@@ -68,13 +70,13 @@ class OrderMenu extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    context
+                        .read<CheckoutBloc>()
+                        .add(CheckoutEvent.removeItem(data.product));
                     // if (data.quantity > 1) {
-                    // context
-                    //     .read<CheckoutBloc>()
-                    //     .add(CheckoutEvent.removeProduct(data.product));
-                    //       onDeleteTap();
-                    //   // data.quantity--;
-                    //   // setState(() {});
+                    //     onDeleteTap();
+                    //   data.quantity--;
+                    //   setState(() {});
                     // }
                   },
                   child: Container(
@@ -96,9 +98,9 @@ class OrderMenu extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // context
-                    //     .read<CheckoutBloc>()
-                    //     .add(CheckoutEvent.addProduct(data.product));
+                    context
+                        .read<CheckoutBloc>()
+                        .add(CheckoutEvent.addItem(data.product));
                     //     onDeleteTap();
                     // data.quantity++;
                     // setState(() {});

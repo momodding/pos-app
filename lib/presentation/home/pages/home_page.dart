@@ -4,6 +4,8 @@ import 'package:flutter_posresto_app/core/assets/assets.gen.dart';
 import 'package:flutter_posresto_app/core/components/buttons.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
+import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
+import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
 import 'package:flutter_posresto_app/presentation/home/block/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/block/local_product/local_product_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/column_button.dart';
@@ -253,7 +255,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(
-                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                              child: BlocBuilder<LocalProductBloc,
+                                  LocalProductState>(
                                 builder: (context, state) {
                                   return state.maybeWhen(orElse: () {
                                     return const Center(
@@ -269,7 +272,11 @@ class _HomePageState extends State<HomePage> {
                                     }
                                     return GridView.builder(
                                       shrinkWrap: true,
-                                      itemCount: products.where((element) => element.category!.id! == 1).toList().length,
+                                      itemCount: products
+                                          .where((element) =>
+                                              element.category!.id! == 1)
+                                          .toList()
+                                          .length,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       gridDelegate:
@@ -281,7 +288,10 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       itemBuilder: (context, index) =>
                                           ProductCard(
-                                        data: products.where((element) => element.category!.id! == 1).toList()[index],
+                                        data: products
+                                            .where((element) =>
+                                                element.category!.id! == 1)
+                                            .toList()[index],
                                         onCartButton: () {},
                                       ),
                                     );
@@ -290,7 +300,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(
-                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                              child: BlocBuilder<LocalProductBloc,
+                                  LocalProductState>(
                                 builder: (context, state) {
                                   return state.maybeWhen(orElse: () {
                                     return const Center(
@@ -306,7 +317,11 @@ class _HomePageState extends State<HomePage> {
                                     }
                                     return GridView.builder(
                                       shrinkWrap: true,
-                                      itemCount: products.where((element) => element.category!.id! == 2).toList().length,
+                                      itemCount: products
+                                          .where((element) =>
+                                              element.category!.id! == 2)
+                                          .toList()
+                                          .length,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       gridDelegate:
@@ -318,7 +333,10 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       itemBuilder: (context, index) =>
                                           ProductCard(
-                                        data: products.where((element) => element.category!.id! == 2).toList()[index],
+                                        data: products
+                                            .where((element) =>
+                                                element.category!.id! == 2)
+                                            .toList()[index],
                                         onCartButton: () {},
                                       ),
                                     );
@@ -327,7 +345,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             SizedBox(
-                              child: BlocBuilder<LocalProductBloc, LocalProductState>(
+                              child: BlocBuilder<LocalProductBloc,
+                                  LocalProductState>(
                                 builder: (context, state) {
                                   return state.maybeWhen(orElse: () {
                                     return const Center(
@@ -343,7 +362,11 @@ class _HomePageState extends State<HomePage> {
                                     }
                                     return GridView.builder(
                                       shrinkWrap: true,
-                                      itemCount: products.where((element) => element.category!.id! == 3).toList().length,
+                                      itemCount: products
+                                          .where((element) =>
+                                              element.category!.id! == 3)
+                                          .toList()
+                                          .length,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       gridDelegate:
@@ -355,7 +378,10 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       itemBuilder: (context, index) =>
                                           ProductCard(
-                                        data: products.where((element) => element.category!.id! == 3).toList()[index],
+                                        data: products
+                                            .where((element) =>
+                                                element.category!.id! == 3)
+                                            .toList()[index],
                                         onCartButton: () {},
                                       ),
                                     );
@@ -540,21 +566,31 @@ class _HomePageState extends State<HomePage> {
                                 'Sub total',
                                 style: TextStyle(color: AppColors.grey),
                               ),
-                              // BlocBuilder<CheckoutBloc, CheckoutState>(
-                              //   builder: (context, state) {
-                              //     final price = state.maybeWhen(
-                              //       orElse: () => 0,
-                              //       success: (products, qty, price) => price,
-                              //     );
-                              //     return Text(
-                              //       price.currencyFormatRp,
-                              //       style: const TextStyle(
-                              //         color: AppColors.primary,
-                              //         fontWeight: FontWeight.w600,
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
+                              BlocBuilder<CheckoutBloc, CheckoutState>(
+                                builder: (context, state) {
+                                  final price = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (products) {
+                                      if (products.isEmpty) {
+                                        return 0;
+                                      }
+                                      return products
+                                        .map((e) =>
+                                            e.product.price!.toIntegerFromText *
+                                            e.quantity)
+                                        .reduce((value, element) =>
+                                            value + element);
+                                      },
+                                  );
+                                  return Text(
+                                    price.currencyFormatRp,
+                                    style: const TextStyle(
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  );
+                                },
+                              ),
                             ],
                           ),
                           const SpaceHeight(100.0),
