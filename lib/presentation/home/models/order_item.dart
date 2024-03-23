@@ -21,4 +21,12 @@ class OrderItem {
 
   @override
   int get hashCode => product.hashCode ^ quantity.hashCode;
+
+  // toLocalMap
+  Map<String, dynamic> toLocalMap(int orderId) {
+    return {
+      'product': product,
+      'quantity': quantity,
+    };
+  }
 }

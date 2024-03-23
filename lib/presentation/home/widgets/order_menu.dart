@@ -5,7 +5,7 @@ import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/core/constants/variables.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
-import 'package:flutter_posresto_app/presentation/home/block/checkout/checkout_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 
 

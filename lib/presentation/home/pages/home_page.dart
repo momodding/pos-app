@@ -4,10 +4,12 @@ import 'package:flutter_posresto_app/core/assets/assets.gen.dart';
 import 'package:flutter_posresto_app/core/components/buttons.dart';
 import 'package:flutter_posresto_app/core/components/spaces.dart';
 import 'package:flutter_posresto_app/core/constants/colors.dart';
+import 'package:flutter_posresto_app/core/extensions/build_context_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
-import 'package:flutter_posresto_app/presentation/home/block/checkout/checkout_bloc.dart';
-import 'package:flutter_posresto_app/presentation/home/block/local_product/local_product_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/pages/confirm_payment_page.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/column_button.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/custom_tab_bar.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/home_title.dart';
@@ -606,7 +608,7 @@ class _HomePageState extends State<HomePage> {
                               horizontal: 24.0, vertical: 16.0),
                           child: Button.filled(
                             onPressed: () {
-                              // context.push(const ConfirmPaymentPage());
+                              context.push(const ConfirmPaymentPage());
                             },
                             label: 'Lanjutkan Pembayaran',
                           ),

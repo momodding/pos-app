@@ -7,7 +7,7 @@ import 'package:flutter_posresto_app/core/constants/variables.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
-import 'package:flutter_posresto_app/presentation/home/block/checkout/checkout_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 
 class ProductCard extends StatelessWidget {
   final Product data;
