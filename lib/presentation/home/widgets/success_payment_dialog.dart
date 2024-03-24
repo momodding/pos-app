@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_posresto_app/core/extensions/build_context_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
+import 'package:flutter_posresto_app/data/dataoutputs/print_dataoutputs.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/order/order_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 import 'package:intl/intl.dart';
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
@@ -102,7 +104,9 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
               builder: (context, state) {
                 final paymentAmount = state.maybeWhen(
                   orElse: () => 0,
-                  loaded: (model) {return model.paymentAmount;},
+                  loaded: (model) {
+                    return model.paymentAmount;
+                  },
                 );
                 return Text(
                   paymentAmount.ceil().currencyFormatRp,
@@ -165,20 +169,20 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
                 Flexible(
                   child: Button.filled(
                     onPressed: () async {
-                      // final printValue =
-                      //     await PrintDataoutputs.instance.printOrder(
-                      //   widget.data,
-                      //   widget.totalQty,
-                      //   widget.totalPrice,
-                      //   'Tunai',
-                      //   widget.totalPrice,
-                      //   'Bahri',
-                      //   widget.totalDiscount,
-                      //   widget.totalTax,
-                      //   widget.subTotal,
-                      //   widget.normalPrice,
-                      // );
-                      // await PrintBluetoothThermal.writeBytes(printValue);
+                      final printValue =
+                          await PrintDataoutputs.instance.printOrder(
+                        widget.data,
+                        widget.totalQty,
+                        widget.totalPrice,
+                        'Tunai',
+                        widget.totalPrice,
+                        'Bahri',
+                        widget.totalDiscount,
+                        widget.totalTax,
+                        widget.subTotal,
+                        widget.normalPrice,
+                      );
+                      await PrintBluetoothThermal.writeBytes(printValue);
                     },
                     label: 'Print',
                   ),
