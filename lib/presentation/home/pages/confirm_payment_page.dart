@@ -381,8 +381,11 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                 final tax = subTotal * 0.11;
                                 final total = subTotal + tax;
 
-                                totalPriceController.text =
-                                    total.ceil().toString();
+                                Future.delayed(Duration.zero,(){
+                                  totalPriceController.text =
+                                      total.ceil().toString();
+                                });
+
                                 return Text(
                                   total.ceil().currencyFormatRp,
                                   style: const TextStyle(

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_posresto_app/core/extensions/date_time_ext.dart';
+import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 
 //  id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,7 +93,8 @@ class OrderModel {
       'total_item': totalItem,
       'id_kasir': idKasir,
       'nama_kasir': namaKasir,
-      'transaction_time': transactionTime,
+      'transaction_time': transactionTime.parseFormatISO8601().toFormatDate("yyyy-MM-dd HH:mm:ss"),
+      // 'transaction_time': transactionTime,
       'is_sync': isSync,
     };
   }

@@ -558,7 +558,7 @@ class _HomePageState extends State<HomePage> {
                                     },
                                   );
                                   return Text(
-                                    '${tax} %',
+                                    '$tax %',
                                     style: const TextStyle(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,

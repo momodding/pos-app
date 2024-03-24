@@ -3,7 +3,6 @@ import 'package:flutter_posresto_app/data/models/response/discount_response_mode
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/constants/colors.dart';
-import '../models/discount_model.dart';
 
 class ManageDiscountCard extends StatelessWidget {
   final Discount data;

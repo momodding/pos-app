@@ -46,7 +46,7 @@ class _ManagePrinterPageState extends State<ManagePrinterPage> {
     "update info"
   ];
 
-  String _selectSize = "2";
+  final String _selectSize = "2";
   final _txtText = TextEditingController(text: "Hello developer");
   bool _progress = false;
   String _msjprogress = "";

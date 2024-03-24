@@ -1,6 +1,7 @@
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 import 'package:flutter_posresto_app/presentation/home/models/order_model.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProductLocalDataSource {
@@ -78,7 +79,8 @@ class ProductLocalDataSource {
   // save order
   Future<void> saveOrder(OrderModel order) async {
     final db = await instance.database;
-    int id = await db.insert(tableOrder, order.toMap(),
+    final orderData = order.toMap();
+    int id = await db.insert(tableOrder, orderData,
         conflictAlgorithm: ConflictAlgorithm.replace);
 
     for (var item in order.orderItems) {
@@ -144,5 +146,25 @@ class ProductLocalDataSource {
   Future<void> deleteAllProducts() async {
     final db = await instance.database;
     await db.delete(tableProduct);
+  }
+
+  // get all order by date
+  Future<List<OrderModel>> getAllOrder(
+    DateTime start,
+    DateTime end,
+  ) async {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd 00:00:00');
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableOrder,
+      // where: 'transaction_time >= ? AND transaction_time <= ?',
+      // whereArgs: [
+      //   formatter.format(start),
+      //   formatter.format(end)
+      // ],
+    );
+    return List.generate(maps.length, (i) {
+      return OrderModel.fromMap(maps[i]);
+    });
   }
 }

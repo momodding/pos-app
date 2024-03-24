@@ -14,6 +14,7 @@ import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bl
 import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/order/order_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/pages/dashboard_page.dart';
+import 'package:flutter_posresto_app/presentation/report/bloc/transaction_report/transaction_report_bloc.dart';
 import 'package:flutter_posresto_app/presentation/setting/bloc/discount/discount_bloc.dart';
 import 'package:flutter_posresto_app/presentation/setting/bloc/sync_order/sync_order_bloc.dart';
 import 'package:flutter_posresto_app/presentation/setting/bloc/sync_product/sync_product_bloc.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DiscountBloc(DiscountRemoteDataSource()),
+        ),
+        BlocProvider(
+          create: (context) => TransactionReportBloc(ProductLocalDataSource.instance),
         ),
       ],
       child: MaterialApp(
