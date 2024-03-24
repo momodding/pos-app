@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_posresto_app/data/datasources/discount_remote_datasource.dart';
 import 'package:flutter_posresto_app/data/models/response/discount_response_model.dart';
-import 'package:flutter_posresto_app/presentation/setting/models/discount_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'discount_bloc.freezed.dart';
@@ -20,6 +19,21 @@ class DiscountBloc extends Bloc<DiscountEvent, DiscountState> {
         emit(_Error(l));
       }, (r) {
         emit(_Loaded(r.data!));
+      });
+    });
+
+    on<_AddDiscount>((event, emit) async {
+      emit(const _Loading());
+      final result = await discountRemoteDataSource.addDiscount({
+        'name': event.name,
+        'description': event.description,
+        'value': event.value.toString(),
+        'type': 'percentage',
+      });
+      result.fold((l) {
+        emit(_Error(l));
+      }, (r) {
+        emit(const _Success());
       });
     });
   }

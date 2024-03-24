@@ -20,21 +20,22 @@ mixin _$DiscountEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() getDiscounts,
-    required TResult Function(DiscountModel data) addDiscount,
+    required TResult Function(String name, String description, int value)
+        addDiscount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? getDiscounts,
-    TResult? Function(DiscountModel data)? addDiscount,
+    TResult? Function(String name, String description, int value)? addDiscount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? getDiscounts,
-    TResult Function(DiscountModel data)? addDiscount,
+    TResult Function(String name, String description, int value)? addDiscount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,7 +121,8 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() getDiscounts,
-    required TResult Function(DiscountModel data) addDiscount,
+    required TResult Function(String name, String description, int value)
+        addDiscount,
   }) {
     return started();
   }
@@ -130,7 +132,7 @@ class _$StartedImpl implements _Started {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? getDiscounts,
-    TResult? Function(DiscountModel data)? addDiscount,
+    TResult? Function(String name, String description, int value)? addDiscount,
   }) {
     return started?.call();
   }
@@ -140,7 +142,7 @@ class _$StartedImpl implements _Started {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? getDiscounts,
-    TResult Function(DiscountModel data)? addDiscount,
+    TResult Function(String name, String description, int value)? addDiscount,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -228,7 +230,8 @@ class _$GetDiscountsImpl implements _GetDiscounts {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() getDiscounts,
-    required TResult Function(DiscountModel data) addDiscount,
+    required TResult Function(String name, String description, int value)
+        addDiscount,
   }) {
     return getDiscounts();
   }
@@ -238,7 +241,7 @@ class _$GetDiscountsImpl implements _GetDiscounts {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? getDiscounts,
-    TResult? Function(DiscountModel data)? addDiscount,
+    TResult? Function(String name, String description, int value)? addDiscount,
   }) {
     return getDiscounts?.call();
   }
@@ -248,7 +251,7 @@ class _$GetDiscountsImpl implements _GetDiscounts {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? getDiscounts,
-    TResult Function(DiscountModel data)? addDiscount,
+    TResult Function(String name, String description, int value)? addDiscount,
     required TResult orElse(),
   }) {
     if (getDiscounts != null) {
@@ -302,7 +305,7 @@ abstract class _$$AddDiscountImplCopyWith<$Res> {
           _$AddDiscountImpl value, $Res Function(_$AddDiscountImpl) then) =
       __$$AddDiscountImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({DiscountModel data});
+  $Res call({String name, String description, int value});
 }
 
 /// @nodoc
@@ -316,13 +319,23 @@ class __$$AddDiscountImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = null,
+    Object? name = null,
+    Object? description = null,
+    Object? value = null,
   }) {
     return _then(_$AddDiscountImpl(
-      null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as DiscountModel,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -330,14 +343,19 @@ class __$$AddDiscountImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AddDiscountImpl implements _AddDiscount {
-  const _$AddDiscountImpl(this.data);
+  const _$AddDiscountImpl(
+      {required this.name, required this.description, required this.value});
 
   @override
-  final DiscountModel data;
+  final String name;
+  @override
+  final String description;
+  @override
+  final int value;
 
   @override
   String toString() {
-    return 'DiscountEvent.addDiscount(data: $data)';
+    return 'DiscountEvent.addDiscount(name: $name, description: $description, value: $value)';
   }
 
   @override
@@ -345,11 +363,14 @@ class _$AddDiscountImpl implements _AddDiscount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddDiscountImpl &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode => Object.hash(runtimeType, name, description, value);
 
   @JsonKey(ignore: true)
   @override
@@ -362,9 +383,10 @@ class _$AddDiscountImpl implements _AddDiscount {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function() getDiscounts,
-    required TResult Function(DiscountModel data) addDiscount,
+    required TResult Function(String name, String description, int value)
+        addDiscount,
   }) {
-    return addDiscount(data);
+    return addDiscount(name, description, value);
   }
 
   @override
@@ -372,9 +394,9 @@ class _$AddDiscountImpl implements _AddDiscount {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function()? getDiscounts,
-    TResult? Function(DiscountModel data)? addDiscount,
+    TResult? Function(String name, String description, int value)? addDiscount,
   }) {
-    return addDiscount?.call(data);
+    return addDiscount?.call(name, description, value);
   }
 
   @override
@@ -382,11 +404,11 @@ class _$AddDiscountImpl implements _AddDiscount {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function()? getDiscounts,
-    TResult Function(DiscountModel data)? addDiscount,
+    TResult Function(String name, String description, int value)? addDiscount,
     required TResult orElse(),
   }) {
     if (addDiscount != null) {
-      return addDiscount(data);
+      return addDiscount(name, description, value);
     }
     return orElse();
   }
@@ -427,9 +449,14 @@ class _$AddDiscountImpl implements _AddDiscount {
 }
 
 abstract class _AddDiscount implements DiscountEvent {
-  const factory _AddDiscount(final DiscountModel data) = _$AddDiscountImpl;
+  const factory _AddDiscount(
+      {required final String name,
+      required final String description,
+      required final int value}) = _$AddDiscountImpl;
 
-  DiscountModel get data;
+  String get name;
+  String get description;
+  int get value;
   @JsonKey(ignore: true)
   _$$AddDiscountImplCopyWith<_$AddDiscountImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -443,6 +470,7 @@ mixin _$DiscountState {
     required TResult Function() loading,
     required TResult Function(List<Discount> discounts) loaded,
     required TResult Function(String message) error,
+    required TResult Function() success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -451,6 +479,7 @@ mixin _$DiscountState {
     TResult? Function()? loading,
     TResult? Function(List<Discount> discounts)? loaded,
     TResult? Function(String message)? error,
+    TResult? Function()? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -459,6 +488,7 @@ mixin _$DiscountState {
     TResult Function()? loading,
     TResult Function(List<Discount> discounts)? loaded,
     TResult Function(String message)? error,
+    TResult Function()? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -468,6 +498,7 @@ mixin _$DiscountState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -476,6 +507,7 @@ mixin _$DiscountState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -484,6 +516,7 @@ mixin _$DiscountState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -549,6 +582,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(List<Discount> discounts) loaded,
     required TResult Function(String message) error,
+    required TResult Function() success,
   }) {
     return initial();
   }
@@ -560,6 +594,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function(List<Discount> discounts)? loaded,
     TResult? Function(String message)? error,
+    TResult? Function()? success,
   }) {
     return initial?.call();
   }
@@ -571,6 +606,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function(List<Discount> discounts)? loaded,
     TResult Function(String message)? error,
+    TResult Function()? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -586,6 +622,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
   }) {
     return initial(this);
   }
@@ -597,6 +634,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return initial?.call(this);
   }
@@ -608,6 +646,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -663,6 +702,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function(List<Discount> discounts) loaded,
     required TResult Function(String message) error,
+    required TResult Function() success,
   }) {
     return loading();
   }
@@ -674,6 +714,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function(List<Discount> discounts)? loaded,
     TResult? Function(String message)? error,
+    TResult? Function()? success,
   }) {
     return loading?.call();
   }
@@ -685,6 +726,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function(List<Discount> discounts)? loaded,
     TResult Function(String message)? error,
+    TResult Function()? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -700,6 +742,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
   }) {
     return loading(this);
   }
@@ -711,6 +754,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return loading?.call(this);
   }
@@ -722,6 +766,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -810,6 +855,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function() loading,
     required TResult Function(List<Discount> discounts) loaded,
     required TResult Function(String message) error,
+    required TResult Function() success,
   }) {
     return loaded(discounts);
   }
@@ -821,6 +867,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function()? loading,
     TResult? Function(List<Discount> discounts)? loaded,
     TResult? Function(String message)? error,
+    TResult? Function()? success,
   }) {
     return loaded?.call(discounts);
   }
@@ -832,6 +879,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function()? loading,
     TResult Function(List<Discount> discounts)? loaded,
     TResult Function(String message)? error,
+    TResult Function()? success,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -847,6 +895,7 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
   }) {
     return loaded(this);
   }
@@ -858,6 +907,7 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return loaded?.call(this);
   }
@@ -869,6 +919,7 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -955,6 +1006,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function() loading,
     required TResult Function(List<Discount> discounts) loaded,
     required TResult Function(String message) error,
+    required TResult Function() success,
   }) {
     return error(message);
   }
@@ -966,6 +1018,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? loading,
     TResult? Function(List<Discount> discounts)? loaded,
     TResult? Function(String message)? error,
+    TResult? Function()? success,
   }) {
     return error?.call(message);
   }
@@ -977,6 +1030,7 @@ class _$ErrorImpl implements _Error {
     TResult Function()? loading,
     TResult Function(List<Discount> discounts)? loaded,
     TResult Function(String message)? error,
+    TResult Function()? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -992,6 +1046,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
   }) {
     return error(this);
   }
@@ -1003,6 +1058,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return error?.call(this);
   }
@@ -1014,6 +1070,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1030,4 +1087,124 @@ abstract class _Error implements DiscountState {
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SuccessImplCopyWith<$Res> {
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$DiscountStateCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessImpl implements _Success {
+  const _$SuccessImpl();
+
+  @override
+  String toString() {
+    return 'DiscountState.success()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Discount> discounts) loaded,
+    required TResult Function(String message) error,
+    required TResult Function() success,
+  }) {
+    return success();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Discount> discounts)? loaded,
+    TResult? Function(String message)? error,
+    TResult? Function()? success,
+  }) {
+    return success?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Discount> discounts)? loaded,
+    TResult Function(String message)? error,
+    TResult Function()? success,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_Error value) error,
+    required TResult Function(_Success value) success,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Loaded value)? loaded,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
+  }) {
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_Error value)? error,
+    TResult Function(_Success value)? success,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Success implements DiscountState {
+  const factory _Success() = _$SuccessImpl;
 }

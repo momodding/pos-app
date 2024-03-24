@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_posresto_app/core/components/buttons.dart';
 import 'package:flutter_posresto_app/core/components/custom_text_field.dart';
 import 'package:flutter_posresto_app/core/extensions/build_context_ext.dart';
+import 'package:flutter_posresto_app/presentation/setting/bloc/discount/discount_bloc.dart';
 
 import '../../../core/components/spaces.dart';
 import '../models/discount_model.dart';
@@ -75,39 +78,39 @@ class _FormDiscountDialogState extends State<FormDiscountDialog> {
                 ],
               ),
               const SpaceHeight(24.0),
-              // BlocConsumer<AddDiscountBloc, AddDiscountState>(
-              //   listener: (context, state) {
-              //     state.maybeWhen(
-              //       orElse: () {},
-              //       success: () {
-              //         context
-              //             .read<DiscountBloc>()
-              //             .add(const DiscountEvent.getDiscounts());
-              //         context.pop();
-              //       },
-              //     );
-              //   },
-              //   builder: (context, state) {
-              //     return state.maybeWhen(orElse: () {
-              //       return Button.filled(
-              //         onPressed: () {
-              //           context.read<AddDiscountBloc>().add(
-              //                 AddDiscountEvent.addDiscount(
-              //                   name: nameController.text,
-              //                   description: descriptionController.text,
-              //                   value: int.parse(discountController.text),
-              //                 ),
-              //               );
-              //         },
-              //         label: 'Simpan Diskon',
-              //       );
-              //     }, loading: () {
-              //       return const Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //     });
-              //   },
-              // )
+              BlocConsumer<DiscountBloc, DiscountState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {},
+                    success: () {
+                      context
+                          .read<DiscountBloc>()
+                          .add(const DiscountEvent.getDiscounts());
+                      context.pop();
+                    },
+                  );
+                },
+                builder: (context, state) {
+                  return state.maybeWhen(orElse: () {
+                    return Button.filled(
+                      onPressed: () {
+                        context.read<DiscountBloc>().add(
+                              DiscountEvent.addDiscount(
+                                name: nameController.text,
+                                description: descriptionController.text,
+                                value: int.parse(discountController.text),
+                              ),
+                            );
+                      },
+                      label: 'Simpan Diskon',
+                    );
+                  }, loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  });
+                },
+              )
             ],
           ),
         ),
