@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_posresto_app/data/models/response/discount_response_model.dart';
 import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,7 +9,7 @@ part 'checkout_event.dart';
 part 'checkout_state.dart';
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
-  CheckoutBloc() : super(const _Loaded([])) {
+  CheckoutBloc() : super(const _Loaded([], null, 11, 0)) {
     on<_AddItem>((event, emit) {
       var currentState = state as _Loaded;
       List<ProductQuantity> items = [...currentState.items];
@@ -21,7 +22,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       } else {
         items.add(ProductQuantity(product: event.product, quantity: 1));
       }
-      emit(_Loaded(items));
+      emit(_Loaded(items, currentState.discount, currentState.tax, currentState.serviceCharge));
     });
 
     on<_RemoveItem>((event, emit) {
@@ -37,11 +38,31 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           items.removeAt(index);
         }
       }
-      emit(_Loaded(items));
+      emit(_Loaded(items, currentState.discount, currentState.tax, currentState.serviceCharge));
     });
 
     on<_Started>((event, emit) {
-      emit(const _Loaded([]));
+      emit(const _Loaded([], null, 11, 0));
+    });
+
+    on<_AddDiscount>((event, emit) {
+      var currentState = state as _Loaded;
+      emit(_Loaded(currentState.items, event.discount, currentState.tax, currentState.serviceCharge));
+    });
+
+    on<_RemoveDiscount>((event, emit) {
+      var currentState = state as _Loaded;
+      emit(_Loaded(currentState.items, null, currentState.tax, currentState.serviceCharge));
+    });
+
+    on<_AddTax>((event, emit) {
+      var currentState = state as _Loaded;
+      emit(_Loaded(currentState.items, currentState.discount, event.tax, currentState.serviceCharge));
+    });
+
+    on<_AddServiceCharge>((event, emit) {
+      var currentState = state as _Loaded;
+      emit(_Loaded(currentState.items, currentState.discount, currentState.tax, event.serviceCharge));
     });
   }
 }

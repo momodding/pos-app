@@ -5,7 +5,11 @@ import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/order/order_bloc.dart';
+import 'package:flutter_posresto_app/presentation/home/dialog/discount_dialog.dart';
+import 'package:flutter_posresto_app/presentation/home/dialog/service_dialog.dart';
+import 'package:flutter_posresto_app/presentation/home/dialog/tax_dialog.dart';
 import 'package:flutter_posresto_app/presentation/home/models/product_quantity.dart';
+import 'package:flutter_posresto_app/presentation/home/widgets/column_button.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/success_payment_dialog.dart';
 
 import '../../../core/assets/assets.gen.dart';
@@ -148,7 +152,7 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                               orElse: () => const Center(
                                 child: Text('No Items'),
                               ),
-                              loaded: (products) {
+                              loaded: (products, discount, tax, serviceCharge) {
                                 if (products.isEmpty) {
                                   return const Center(
                                     child: Text('No Items'),
@@ -168,139 +172,139 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                           },
                         ),
                         const SpaceHeight(16.0),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   children: [
-                        //     ColumnButton(
-                        //       label: 'Diskon',
-                        //       svgGenImage: Assets.icons.diskon,
-                        //       onPressed: () => showDialog(
-                        //         context: context,
-                        //         builder: (context) => const DiscountDialog(),
-                        //       ),
-                        //     ),
-                        //     ColumnButton(
-                        //       label: 'Pajak',
-                        //       svgGenImage: Assets.icons.pajak,
-                        //       onPressed: () => showDialog(
-                        //         context: context,
-                        //         builder: (context) => const TaxDialog(),
-                        //       ),
-                        //     ),
-                        //     ColumnButton(
-                        //       label: 'Layanan',
-                        //       svgGenImage: Assets.icons.layanan,
-                        //       onPressed: () => showDialog(
-                        //         context: context,
-                        //         builder: (context) => const ServiceDialog(),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ColumnButton(
+                              label: 'Diskon',
+                              svgGenImage: Assets.icons.diskon,
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => const DiscountDialog(),
+                              ),
+                            ),
+                            ColumnButton(
+                              label: 'Pajak',
+                              svgGenImage: Assets.icons.pajak,
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => const TaxDialog(),
+                              ),
+                            ),
+                            ColumnButton(
+                              label: 'Layanan',
+                              svgGenImage: Assets.icons.layanan,
+                              onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) => const ServiceDialog(),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SpaceHeight(8.0),
                         const Divider(),
                         const SpaceHeight(8.0),
 
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     const Text(
-                        //       'Pajak',
-                        //       style: TextStyle(color: AppColors.grey),
-                        //     ),
-                        //     BlocBuilder<CheckoutBloc, CheckoutState>(
-                        //       builder: (context, state) {
-                        //         final tax = state.maybeWhen(
-                        //           orElse: () => 0,
-                        //           loaded: (products, discount, tax, service) =>
-                        //               tax,
-                        //         );
-                        //         final price = state.maybeWhen(
-                        //           orElse: () => 0,
-                        //           loaded: (products, discount, tax, service) =>
-                        //               products.fold(
-                        //             0,
-                        //             (previousValue, element) =>
-                        //                 previousValue +
-                        //                 (element.product.price!
-                        //                         .toIntegerFromText *
-                        //                     element.quantity),
-                        //           ),
-                        //         );
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Pajak',
+                              style: TextStyle(color: AppColors.grey),
+                            ),
+                            BlocBuilder<CheckoutBloc, CheckoutState>(
+                              builder: (context, state) {
+                                final tax = state.maybeWhen(
+                                  orElse: () => 0,
+                                  loaded: (products, discount, tax, service) =>
+                                      tax,
+                                );
+                                final price = state.maybeWhen(
+                                  orElse: () => 0,
+                                  loaded: (products, discount, tax, service) =>
+                                      products.fold(
+                                    0,
+                                    (previousValue, element) =>
+                                        previousValue +
+                                        (element.product.price!
+                                                .toIntegerFromText *
+                                            element.quantity),
+                                  ),
+                                );
 
-                        //         final discount = state.maybeWhen(
-                        //             orElse: () => 0,
-                        //             loaded: (products, discount, tax,
-                        //                 serviceCharge) {
-                        //               if (discount == null) {
-                        //                 return 0;
-                        //               }
-                        //               return discount.value!
-                        //                   .replaceAll('.00', '')
-                        //                   .toIntegerFromText;
-                        //             });
+                                final discount = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (products, discount, tax,
+                                        serviceCharge) {
+                                      if (discount == null) {
+                                        return 0;
+                                      }
+                                      return discount.value!
+                                          .replaceAll('.00', '')
+                                          .toIntegerFromText;
+                                    });
 
-                        //         final subTotal =
-                        //             price - (discount / 100 * price);
-                        //         final finalTax = subTotal * 0.11;
-                        //         return Text(
-                        //           '$tax % (${finalTax.toInt().currencyFormatRp})',
-                        //           style: const TextStyle(
-                        //             color: AppColors.primary,
-                        //             fontWeight: FontWeight.w600,
-                        //           ),
-                        //         );
-                        //       },
-                        //     ),
-                        //   ],
-                        // ),
+                                final subTotal =
+                                    price - (discount / 100 * price);
+                                final finalTax = subTotal * 0.11;
+                                return Text(
+                                  '$tax % (${finalTax.toInt().currencyFormatRp})',
+                                  style: const TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                         const SpaceHeight(16.0),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       'Diskon',
-                        //       style: TextStyle(color: AppColors.grey),
-                        //     ),
-                        //     BlocBuilder<CheckoutBloc, CheckoutState>(
-                        //       builder: (context, state) {
-                        //         final discount = state.maybeWhen(
-                        //             orElse: () => 0,
-                        //             loaded: (products, discount, tax,
-                        //                 serviceCharge) {
-                        //               if (discount == null) {
-                        //                 return 0;
-                        //               }
-                        //               return discount.value!
-                        //                   .replaceAll('.00', '')
-                        //                   .toIntegerFromText;
-                        //             });
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Diskon',
+                              style: TextStyle(color: AppColors.grey),
+                            ),
+                            BlocBuilder<CheckoutBloc, CheckoutState>(
+                              builder: (context, state) {
+                                final discount = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (products, discount, tax,
+                                        serviceCharge) {
+                                      if (discount == null) {
+                                        return 0;
+                                      }
+                                      return discount.value!
+                                          .replaceAll('.00', '')
+                                          .toIntegerFromText;
+                                    });
 
-                        //         final subTotal = state.maybeWhen(
-                        //             orElse: () => 0,
-                        //             loaded:
-                        //                 (products, discount, tax, service) =>
-                        //                     products.fold(
-                        //                       0,
-                        //                       (previousValue, element) =>
-                        //                           previousValue +
-                        //                           (element.product.price!
-                        //                                   .toIntegerFromText *
-                        //                               element.quantity),
-                        //                     ));
+                                final subTotal = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded:
+                                        (products, discount, tax, service) =>
+                                            products.fold(
+                                              0,
+                                              (previousValue, element) =>
+                                                  previousValue +
+                                                  (element.product.price!
+                                                          .toIntegerFromText *
+                                                      element.quantity),
+                                            ));
 
-                        //         final finalDiscount = discount / 100 * subTotal;
-                        //         return Text(
-                        //           finalDiscount.toInt().currencyFormatRp,
-                        //           style: TextStyle(
-                        //             color: AppColors.primary,
-                        //             fontWeight: FontWeight.w600,
-                        //           ),
-                        //         );
-                        //       },
-                        //     ),
-                        //   ],
-                        // ),
+                                final finalDiscount = discount / 100 * subTotal;
+                                return Text(
+                                  finalDiscount.toInt().currencyFormatRp,
+                                  style: const TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                         const SpaceHeight(16.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,7 +318,7 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                 final price = state.maybeWhen(
                                     orElse: () => 0,
                                     loaded:
-                                        (products) =>
+                                        (products, discount, tax, serviceCharge) =>
                                             products.fold(
                                               0,
                                               (previousValue, element) =>
@@ -349,31 +353,31 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                               builder: (context, state) {
                                 final price = state.maybeWhen(
                                   orElse: () => 0,
-                                  loaded: (products) =>
-                                      products.fold(
-                                    0,
-                                    (previousValue, element) =>
+                                  loaded: (products, discount, tax, serviceCharge) =>
+                                    products.fold(
+                                      0,
+                                      (previousValue, element) =>
                                         previousValue +
                                         (element.product.price!
-                                                .toIntegerFromText *
-                                            element.quantity),
-                                  ),
+                                          .toIntegerFromText *
+                                          element.quantity),
+                                    ),
                                 );
 
-                                // final discount = state.maybeWhen(
-                                //     orElse: () => 0,
-                                //     loaded: (products, discount, tax,
-                                //         serviceCharge) {
-                                //       if (discount == null) {
-                                //         return 0;
-                                //       }
-                                //       return discount.value!
-                                //           .replaceAll('.00', '')
-                                //           .toIntegerFromText;
-                                //     });
+                                final discount = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (products, discount, tax,
+                                        serviceCharge) {
+                                      if (discount == null) {
+                                        return 0;
+                                      }
+                                      return discount.value!
+                                          .replaceAll('.00', '')
+                                          .toIntegerFromText;
+                                    });
 
                                 final subTotal =
-                                    price - (0 / 100 * price);
+                                    price - (discount / 100 * price);
                                 final tax = subTotal * 0.11;
                                 final total = subTotal + tax;
 
@@ -525,22 +529,10 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                 const SpaceWidth(8.0),
                                 BlocBuilder<CheckoutBloc, CheckoutState>(
                                   builder: (context, state) {
-                                    // final discount = state.maybeWhen(
-                                    //     orElse: () => 0,
-                                    //     loaded: (products, discount, tax,
-                                    //         serviceCharge) {
-                                    //       if (discount == null) {
-                                    //         return 0;
-                                    //       }
-                                    //       return discount.value!
-                                    //           .replaceAll('.00', '')
-                                    //           .toIntegerFromText;
-                                    //     });
-
                                     final price = state.maybeWhen(
                                       orElse: () => 0,
                                       loaded:
-                                          (products) =>
+                                          (products, discount, tax, serviceCharge) =>
                                               products.fold(
                                         0,
                                         (previousValue, element) =>
@@ -551,29 +543,36 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                       ),
                                     );
 
-                                    // final discount = state.maybeWhen(
-                                    //     orElse: () => 0,
-                                    //     loaded: (products, discount, tax,
-                                    //         serviceCharge) {
-                                    //       if (discount == null) {
-                                    //         return 0;
-                                    //       }
-                                    //       return discount.value!
-                                    //           .replaceAll('.00', '')
-                                    //           .toIntegerFromText;
-                                    //     });
+                                    final discount = state.maybeWhen(
+                                        orElse: () => 0,
+                                        loaded: (products, discount, tax,
+                                            serviceCharge) {
+                                          if (discount == null) {
+                                            return 0;
+                                          }
+                                          return discount.value!
+                                              .replaceAll('.00', '')
+                                              .toIntegerFromText;
+                                        });
+
+                                    final tax = state.maybeWhen(
+                                      orElse: () => 0,
+                                      loaded:
+                                          (products, discount, tax, serviceCharge) =>
+                                              tax,
+                                    );
 
                                     final subTotal =
-                                        price - (0 / 100 * price);
+                                        price - (discount / 100 * price);
                                     final totalDiscount =
-                                        0 / 100 * price;
-                                    final finalTax = subTotal * 0.11;
+                                        discount / 100 * price;
+                                    final finalTax = subTotal * (tax / 100);
 
                                     List<ProductQuantity> items =
                                         state.maybeWhen(
                                       orElse: () => [],
                                       loaded:
-                                          (products) =>
+                                          (products, discount, tax, serviceCharge) =>
                                               products,
                                     );
                                     final totalQty = items.fold(

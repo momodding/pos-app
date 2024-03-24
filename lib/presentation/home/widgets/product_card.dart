@@ -104,7 +104,7 @@ class ProductCard extends StatelessWidget {
               builder: (context, state) {
                 return state.maybeWhen(
                   orElse: () => const SizedBox(),
-                  loaded: (products) {
+                  loaded: (products, discount, tax, serviceCharge) {
                     if (products.isEmpty) {
                       return Align(
                         alignment: Alignment.topRight,

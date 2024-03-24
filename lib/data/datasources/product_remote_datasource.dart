@@ -19,8 +19,7 @@ class ProductRemoteDataSource {
     if (response.statusCode == 200) {
       try {
         return Right(ProductResponseModel.fromJson(response.body));
-      } on Exception catch (ex, strace) {
-         print('Stack trace:\n $strace');
+      } on Exception {
         return const Left('Failed to get products');
       }
     } else {

@@ -8,7 +8,7 @@ import 'package:flutter_posresto_app/presentation/auth/bloc/logout/logout_bloc.d
 import 'package:flutter_posresto_app/presentation/auth/login_page.dart';
 import 'package:flutter_posresto_app/presentation/home/pages/home_page.dart';
 import 'package:flutter_posresto_app/presentation/home/widgets/nav_item.dart';
-import 'package:flutter_posresto_app/presentation/setting/pages/sync_data_page.dart';
+import 'package:flutter_posresto_app/presentation/setting/pages/settings_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -24,9 +24,9 @@ class _DashboardPageState extends State<DashboardPage> {
     const HomePage(),
     const Center(child: Text('This is page 2')),
     const Center(child: Text('This is page 3')),
-    const SyncDataPage(),
+    // const SyncDataPage(),
     // const ManagePrinterPage(),
-    // const SettingsPage(),
+    const SettingsPage(),
   ];
 
   void _onItemTapped(int index) {
