@@ -23,7 +23,7 @@ class HomeTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Resto with Bahri POS',
+              'POS Farma Apotek',
               style: TextStyle(
                 color: AppColors.primary,
                 fontSize: 22,
@@ -45,7 +45,7 @@ class HomeTitle extends StatelessWidget {
           child: SearchInput(
             controller: controller,
             onChanged: onChanged,
-            hintText: 'Search for food, coffe, etc..',
+            hintText: 'Search for medicine, vitamin, etc..',
           ),
         ),
       ],

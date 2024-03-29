@@ -37,6 +37,7 @@ class SuccessPaymentDialog extends StatefulWidget {
 }
 
 class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
+
   // List<ProductQuantity> data = [];
   // int totalQty = 0;
   // int totalPrice = 0;
@@ -167,24 +168,36 @@ class _SuccessPaymentDialogState extends State<SuccessPaymentDialog> {
                 ),
                 const SpaceWidth(8.0),
                 Flexible(
-                  child: Button.filled(
-                    onPressed: () async {
-                      final printValue =
-                          await PrintDataoutputs.instance.printOrder(
-                        widget.data,
-                        widget.totalQty,
-                        widget.totalPrice,
-                        'Tunai',
-                        widget.totalPrice,
-                        'Bahri',
-                        widget.totalDiscount,
-                        widget.totalTax,
-                        widget.subTotal,
-                        widget.normalPrice,
+                  child: BlocBuilder<OrderBloc, OrderState>(
+                    builder: (context, state) {
+                      return Button.filled(
+                        onPressed: () async {
+                          final paymentMethod = state.maybeWhen(
+                            orElse: () => 'Cash',
+                            loaded: (model) => model.paymentMethod,
+                          );
+                          final namaKasir = state.maybeWhen(
+                            orElse: () => 'Admin',
+                            loaded: (model) => model.namaKasir,
+                          );
+                          final printValue =
+                              await PrintDataoutputs.instance.printOrder(
+                            widget.data,
+                            widget.totalQty,
+                            widget.totalPrice,
+                            paymentMethod,
+                            widget.totalPrice,
+                            namaKasir,
+                            widget.totalDiscount,
+                            widget.totalTax,
+                            widget.subTotal,
+                            widget.normalPrice,
+                          );
+                          await PrintBluetoothThermal.writeBytes(printValue);
+                        },
+                        label: 'Print',
                       );
-                      await PrintBluetoothThermal.writeBytes(printValue);
                     },
-                    label: 'Print',
                   ),
                 ),
               ],

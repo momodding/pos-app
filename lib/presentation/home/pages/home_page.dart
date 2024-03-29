@@ -7,6 +7,7 @@ import 'package:flutter_posresto_app/core/constants/colors.dart';
 import 'package:flutter_posresto_app/core/extensions/build_context_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/int_ext.dart';
 import 'package:flutter_posresto_app/core/extensions/string_ext.dart';
+import 'package:flutter_posresto_app/data/models/response/product_response_model.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/bloc/local_product/local_product_bloc.dart';
 import 'package:flutter_posresto_app/presentation/home/dialog/discount_dialog.dart';
@@ -29,7 +30,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final searchController = TextEditingController();
 
-  // List<Product> searchResults = [];
+  List<Product> searchResults = [];
   // final List<Product> products = [
   //   ProductModel(
   //       image: Assets.images.menu1.path,
@@ -209,9 +210,9 @@ class _HomePageState extends State<HomePage> {
                         CustomTabBar(
                           tabTitles: const [
                             'Semua',
-                            'Makanan',
-                            'Minuman',
-                            'Snack'
+                            'Obat',
+                            'Vitamin',
+                            'Racikan'
                           ],
                           initialTabIndex: 0,
                           tabViews: [
@@ -422,23 +423,23 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           const SpaceHeight(8.0),
-                          Row(
-                            children: [
-                              Button.filled(
-                                width: 120.0,
-                                height: 40,
-                                onPressed: () {},
-                                label: 'Dine In',
-                              ),
-                              const SpaceWidth(8.0),
-                              Button.outlined(
-                                width: 100.0,
-                                height: 40,
-                                onPressed: () {},
-                                label: 'To Go',
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     Button.filled(
+                          //       width: 120.0,
+                          //       height: 40,
+                          //       onPressed: () {},
+                          //       label: 'Dine In',
+                          //     ),
+                          //     const SpaceWidth(8.0),
+                          //     Button.outlined(
+                          //       width: 100.0,
+                          //       height: 40,
+                          //       onPressed: () {},
+                          //       label: 'To Go',
+                          //     ),
+                          //   ],
+                          // ),
                           const SpaceHeight(16.0),
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

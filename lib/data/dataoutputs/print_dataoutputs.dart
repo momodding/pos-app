@@ -31,7 +31,7 @@ class PrintDataoutputs {
     final total = totalPrice + pajak;
 
     bytes += generator.reset();
-    bytes += generator.text('RESTO WITH BAHRI',
+    bytes += generator.text('Farma Apotek',
         styles: const PosStyles(
           bold: true,
           align: PosAlign.center,
